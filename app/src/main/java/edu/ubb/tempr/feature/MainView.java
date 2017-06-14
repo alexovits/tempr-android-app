@@ -1,9 +1,6 @@
-package edu.ubb.tempr;
+package edu.ubb.tempr.feature;
 
 import android.content.res.Configuration;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,12 +12,14 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.ubb.tempr.R;
 import edu.ubb.tempr.data.HeatingCircuit;
+import edu.ubb.tempr.feature.dashboard.DashboardFragment;
+import edu.ubb.tempr.feature.dashboard.adapter.HeatingCircuitAdapter;
 
 public class MainView extends AppCompatActivity{
 

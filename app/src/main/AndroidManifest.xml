@@ -14,12 +14,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="edu.ubb.tempr.LoginActivity"
+            android:name="edu.ubb.tempr.feature.login.LoginActivity"
             android:label="@string/app_name">
 
         </activity>
         <activity
-            android:name="edu.ubb.tempr.MainView"
+            android:name="edu.ubb.tempr.feature.MainView"
             android:label="@string/title_activity_main_view"
             android:theme="@style/AppTheme.NoActionBar">
 

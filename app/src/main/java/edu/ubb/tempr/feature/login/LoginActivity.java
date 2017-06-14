@@ -1,4 +1,4 @@
-package edu.ubb.tempr;
+package edu.ubb.tempr.feature.login;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +15,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.List;
+
+import edu.ubb.tempr.R;
+import edu.ubb.tempr.feature.MainView;
 
 /**
  * A login screen that offers login via email/password.
