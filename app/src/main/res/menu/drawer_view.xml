@@ -4,26 +4,18 @@
         <item
             android:id="@+id/nav_first_fragment"
             android:icon="@drawable/one"
-            android:title="First" />
+            android:title="Dashboard" />
         <item
             android:id="@+id/nav_second_fragment"
             android:icon="@drawable/two"
-            android:title="Second" />
+            android:title="Settings" />
         <item
             android:id="@+id/nav_third_fragment"
             android:icon="@drawable/three"
-            android:title="Third" />
-        <item android:title="Sub items">
-            <menu>
-                <group android:checkableBehavior="single">
-                    <item
-                        android:icon="@drawable/one"
-                        android:title="Sub item 1" />
-                    <item
-                        android:icon="@drawable/two"
-                        android:title="Sub item 2" />
-                </group>
-            </menu>
-        </item>
+            android:title="Tokens" />
+        <item
+            android:id="@+id/nav_fourth_fragment"
+            android:icon="@drawable/three"
+            android:title="Log out" />
     </group>
 </menu>

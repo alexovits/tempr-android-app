@@ -1,30 +1,34 @@
-package ubb.edu.tempr;
+package edu.ubb.tempr;
 
 import android.content.res.Configuration;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import edu.ubb.tempr.data.HeatingCircuit;
 
 public class MainView extends AppCompatActivity{
 
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
     private NavigationView nvDrawer;
-    // Make sure to be using android.support.v7.app.ActionBarDrawerToggle version.
-    // The android.support.v4.app.ActionBarDrawerToggle has been deprecated.
     private ActionBarDrawerToggle drawerToggle;
+    private List<HeatingCircuit> heatingCircuitList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +51,29 @@ public class MainView extends AppCompatActivity{
         nvDrawer = (NavigationView) findViewById(R.id.nvView);
         // Setup drawer view
         setupDrawerContent(nvDrawer);
+        // Test
+        setupRecyclerView();
+    }
+
+    private void setupRecyclerView(){
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rvContacts);
+        heatingCircuitList = new ArrayList<>();
+        for(int i=10; i<23; i++){
+            HeatingCircuit hc = new HeatingCircuit();
+            hc.setCurrentTemperature(i);
+            heatingCircuitList.add(hc);
+        }
+
+        HeatingCircuitAdapter heatingCircuitAdapter = new HeatingCircuitAdapter(this, heatingCircuitList);
+        recyclerView.setAdapter(heatingCircuitAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    private void changeCircleShapeColor(){
+        //Chaning the color of a predefined shape on a textView
+        //TextView textView = (TextView) findViewById(R.id.fasz);
+        //Drawable background = textView.getBackground();
+        //((GradientDrawable) background).setColor(Color.BLUE);
     }
 
     @Override
@@ -104,7 +131,8 @@ public class MainView extends AppCompatActivity{
             case R.id.nav_first_fragment:
                 //fragmentClass = FirstFragment.class;
                 Log.i("Main","Egyes");
-                break;
+                DashboardFragment dashboardFragment = new DashboardFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.flContent, dashboardFragment).commit();
             case R.id.nav_second_fragment:
 //                fragmentClass = SecondFragment.class;
                 Log.i("Main","Kettes");
@@ -116,7 +144,6 @@ public class MainView extends AppCompatActivity{
             default:
 //                fragmentClass = FirstFragment.class;
                 Log.i("Main","Négyes");
-
         }
 
 //        try {

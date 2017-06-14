@@ -1,4 +1,4 @@
-package ubb.edu.tempr;
+package edu.ubb.tempr;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
