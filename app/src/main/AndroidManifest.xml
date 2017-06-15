@@ -14,21 +14,22 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="edu.ubb.tempr.feature.login.LoginActivity"
-            android:label="@string/app_name">
-
-        </activity>
+            android:name=".feature.login.LoginActivity"
+            android:label="@string/app_name"></activity>
         <activity
-            android:name="edu.ubb.tempr.feature.MainView"
+            android:name=".feature.MainView"
             android:label="@string/title_activity_main_view"
             android:theme="@style/AppTheme.NoActionBar">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
+        <activity
+            android:name=".feature.heatingcircuit.HeatingCircuitDetailedView"
+            android:label="@string/title_activity_heating_circuit_detailed_view"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

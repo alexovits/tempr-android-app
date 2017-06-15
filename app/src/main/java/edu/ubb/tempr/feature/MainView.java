@@ -3,6 +3,7 @@ package edu.ubb.tempr.feature;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -66,6 +67,7 @@ public class MainView extends AppCompatActivity{
         HeatingCircuitAdapter heatingCircuitAdapter = new HeatingCircuitAdapter(this, heatingCircuitList);
         recyclerView.setAdapter(heatingCircuitAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
     }
 
     private void changeCircleShapeColor(){

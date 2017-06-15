@@ -4,23 +4,45 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="10dp"
-    android:paddingBottom="10dp"
+    android:paddingTop="20dp"
+    android:paddingBottom="20dp"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:clipToPadding="false"
+    android:background="@drawable/heatingcircuit_item_ripple"
+    android:clickable="true"
     >
 
     <TextView
         android:id="@+id/contact_name"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:gravity="center"
+        android:background="@drawable/text_view_circle"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:textColor="#E0F2F1"
+        android:elevation="10dp"
+        android:clickable="true"
         />
 
-    <Button
+    <TextView
         android:id="@+id/message_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
-        android:textSize="10sp"
-        />
+        android:textSize="18sp"
+        android:gravity="left"
+        android:layout_weight="30"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:text="Living Room" />
+
+    <ImageView
+        android:layout_width="7dp"
+        android:layout_height="16dp"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:background="@drawable/forward"/>
 </LinearLayout>

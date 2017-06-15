@@ -52,8 +52,9 @@ public class HeatingCircuitAdapter extends RecyclerView.Adapter<HeatingCircuitAd
         // Set item views based on your views and data model
         TextView textView = viewHolder.nameTextView;
         textView.setText(Integer.toString(heatingCircuit.getCurrentTemperature()));
-        Button button = viewHolder.messageButton;
-        button.setText("Message");
+        textView.setWidth(0);
+        //Button button = viewHolder.messageButton;
+        //button.setText("Message");
     }
 
     @Override
@@ -67,7 +68,7 @@ public class HeatingCircuitAdapter extends RecyclerView.Adapter<HeatingCircuitAd
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
         public TextView nameTextView;
-        public Button messageButton;
+        //public Button messageButton;
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
@@ -77,7 +78,7 @@ public class HeatingCircuitAdapter extends RecyclerView.Adapter<HeatingCircuitAd
             super(itemView);
 
             nameTextView = (TextView) itemView.findViewById(R.id.contact_name);
-            messageButton = (Button) itemView.findViewById(R.id.message_button);
+            //messageButton = (Button) itemView.findViewById(R.id.message_button);
         }
     }
 
