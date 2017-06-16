@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.ubb.tempr.R;
-import edu.ubb.tempr.data.HeatingCircuit;
+import edu.ubb.tempr.data.model.HeatingCircuit;
 import edu.ubb.tempr.feature.dashboard.DashboardFragment;
 import edu.ubb.tempr.feature.dashboard.adapter.HeatingCircuitAdapter;
 
@@ -68,6 +68,29 @@ public class MainView extends AppCompatActivity{
         recyclerView.setAdapter(heatingCircuitAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+//
+//        recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener(){
+//
+//            @Override
+//            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+//                return false;
+//            }
+//
+//            @Override
+//            public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+//                rv.
+//            }
+//
+//            @Override
+//            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+//
+//            }
+//        });
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+
     }
 
     private void changeCircleShapeColor(){
@@ -135,15 +158,12 @@ public class MainView extends AppCompatActivity{
                 DashboardFragment dashboardFragment = new DashboardFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.flContent, dashboardFragment).commit();
             case R.id.nav_second_fragment:
-//                fragmentClass = SecondFragment.class;
                 Log.i("Main","Kettes");
                 break;
             case R.id.nav_third_fragment:
                 Log.i("Main","Hármas");
-//                fragmentClass = ThirdFragment.class;
                 break;
             default:
-//                fragmentClass = FirstFragment.class;
                 Log.i("Main","Négyes");
         }
 

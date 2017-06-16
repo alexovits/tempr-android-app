@@ -1,17 +1,19 @@
 package edu.ubb.tempr.feature.dashboard.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.List;
 
 import edu.ubb.tempr.R;
-import edu.ubb.tempr.data.HeatingCircuit;
+import edu.ubb.tempr.data.model.HeatingCircuit;
+import edu.ubb.tempr.feature.heatingcircuit.HeatingCircuitDetailedView;
 
 /**
  * Created by zsoltszabo on 6/14/17.
@@ -64,21 +66,25 @@ public class HeatingCircuitAdapter extends RecyclerView.Adapter<HeatingCircuitAd
 
     // Provide a direct reference to each of the views within a data item
     // Used to cache the views within the item layout for fast access
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
         public TextView nameTextView;
-        //public Button messageButton;
 
-        // We also create a constructor that accepts the entire item row
-        // and does the view lookups to find each subview
         public ViewHolder(View itemView) {
             // Stores the itemView in a public final member variable that can be used
             // to access the context from any ViewHolder instance.
             super(itemView);
-
             nameTextView = (TextView) itemView.findViewById(R.id.contact_name);
-            //messageButton = (Button) itemView.findViewById(R.id.message_button);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            int position = getAdapterPosition();
+            Intent intent = new Intent(getContext(), HeatingCircuitDetailedView.class);
+            getContext().startActivity(intent);
+            Log.i("Adapter", "Na akkor: " + nameTextView.getText());
         }
     }
 
