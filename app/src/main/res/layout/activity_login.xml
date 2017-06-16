@@ -8,21 +8,15 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/canvas"
     tools:context="edu.ubb.tempr.feature.login.LoginActivity">
 
     <!-- Login progress -->
-    <ProgressBar
-        android:id="@+id/login_progress"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:visibility="gone" />
-
-    <ScrollView
+    <RelativeLayout
         android:id="@+id/login_form"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:gravity="center">
 
         <LinearLayout
             android:id="@+id/email_login_form"
@@ -30,9 +24,22 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:text="TempR"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textSize="45sp"
+                android:textColor="#d97c7c"
+                android:shadowDx="2"
+                android:shadowDy="2"
+                android:shadowRadius="2"/>
+
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp">
 
                 <AutoCompleteTextView
                     android:id="@+id/email"
@@ -47,7 +54,8 @@
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp">
 
                 <EditText
                     android:id="@+id/password"
@@ -59,6 +67,7 @@
                     android:imeOptions="actionUnspecified"
                     android:inputType="textPassword"
                     android:maxLines="1"
+                    android:textColorHighlight="@color/primary"
                     android:singleLine="true" />
 
             </android.support.design.widget.TextInputLayout>
@@ -66,12 +75,41 @@
             <Button
                 android:id="@+id/email_sign_in_button"
                 style="?android:textAppearanceSmall"
-                android:layout_width="match_parent"
+                android:layout_width="170dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/action_sign_in"
-                android:textStyle="bold" />
+                android:layout_marginTop="40dp"
+                android:text="Login"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:textSize="17dp"
+                android:backgroundTint="@color/primary"
+                android:textColor="@color/canvas"/>
 
+            <Button
+                android:id="@+id/signup_button"
+                style="?android:textAppearanceSmall"
+                android:layout_width="170dp"
+                android:layout_height="wrap_content"
+                android:text="Sign Up"
+                android:textStyle="bold"
+                android:layout_marginTop="7dp"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/primary"
+                android:textSize="17dp"
+                android:textColor="@color/canvas"/>
+            <ProgressBar
+                android:id="@+id/login_progress"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp"
+                android:visibility="gone"
+                android:layout_gravity="center"
+                />
         </LinearLayout>
-    </ScrollView>
+
+    </RelativeLayout>
+
+
+
 </LinearLayout>

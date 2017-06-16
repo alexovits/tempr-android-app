@@ -20,7 +20,7 @@ import java.util.List;
 import edu.ubb.tempr.R;
 import edu.ubb.tempr.data.model.HeatingCircuit;
 import edu.ubb.tempr.feature.dashboard.DashboardFragment;
-import edu.ubb.tempr.feature.dashboard.adapter.HeatingCircuitAdapter;
+import edu.ubb.tempr.feature.dashboard.HeatingCircuitAdapter;
 
 public class MainView extends AppCompatActivity{
 

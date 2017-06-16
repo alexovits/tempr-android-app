@@ -1,4 +1,4 @@
-package edu.ubb.tempr.feature.dashboard.adapter;
+package edu.ubb.tempr.feature.dashboard;
 
 import android.content.Context;
 import android.content.Intent;
