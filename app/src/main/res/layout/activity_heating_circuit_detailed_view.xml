@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-    tools:context="edu.ubb.tempr.feature.heatingcircuit.HeatingCircuitDetailedView"
+    tools:context="edu.ubb.tempr.ui.heatingcircuit.HeatingCircuitDetailedView"
     android:weightSum="20">
     <include
         layout="@layout/toolbar"

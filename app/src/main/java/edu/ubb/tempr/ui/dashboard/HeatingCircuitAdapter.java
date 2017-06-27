@@ -1,7 +1,8 @@
-package edu.ubb.tempr.feature.dashboard;
+package edu.ubb.tempr.ui.dashboard;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.widget.ActionBarContainer;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,7 +14,7 @@ import java.util.List;
 
 import edu.ubb.tempr.R;
 import edu.ubb.tempr.data.model.HeatingCircuit;
-import edu.ubb.tempr.feature.heatingcircuit.HeatingCircuitDetailedView;
+import edu.ubb.tempr.ui.heatingcircuit.HeatingCircuitDetailedView;
 
 /**
  * Created by zsoltszabo on 6/14/17.

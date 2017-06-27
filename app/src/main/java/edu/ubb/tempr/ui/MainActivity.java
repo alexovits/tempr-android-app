@@ -1,4 +1,4 @@
-package edu.ubb.tempr.feature;
+package edu.ubb.tempr.ui;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -17,18 +17,31 @@ import android.view.MenuItem;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.ubb.tempr.R;
-import edu.ubb.tempr.data.model.HeatingCircuit;
-import edu.ubb.tempr.feature.dashboard.DashboardFragment;
-import edu.ubb.tempr.feature.dashboard.HeatingCircuitAdapter;
+import javax.inject.Inject;
 
-public class MainView extends AppCompatActivity{
+import edu.ubb.tempr.R;
+import edu.ubb.tempr.component.TemprApplication;
+import edu.ubb.tempr.data.model.HeatingCircuit;
+import edu.ubb.tempr.data.model.User;
+import edu.ubb.tempr.data.remote.user.UserService;
+import edu.ubb.tempr.ui.dashboard.DashboardFragment;
+import edu.ubb.tempr.ui.dashboard.HeatingCircuitAdapter;
+import okhttp3.OkHttpClient;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+
+public class MainActivity extends AppCompatActivity{
 
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
     private NavigationView nvDrawer;
     private ActionBarDrawerToggle drawerToggle;
     private List<HeatingCircuit> heatingCircuitList;
+
+    @Inject
+    Retrofit retrofit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,14 +66,35 @@ public class MainView extends AppCompatActivity{
         setupDrawerContent(nvDrawer);
         // Test
         setupRecyclerView();
+
+        //Dagger test
+        ((TemprApplication) getApplication()).getAppComponent().inject(this);
+        UserService userService = retrofit.create(UserService.class);
+        Call<String> call = userService.getVersion();
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                int statusCode = response.code();
+                String user = response.body();
+                Log.i("MAIN","The response is: " + statusCode + " | And the message is: " + user);
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                // Log error here since request failed
+                Log.i("MAIN","FAIL pal a terminator");
+            }
+        });
+        getSupportActionBar().setTitle("Dashboard");
     }
 
     private void setupRecyclerView(){
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rvContacts);
         heatingCircuitList = new ArrayList<>();
-        for(int i=10; i<23; i++){
+        for(int i=19; i<23; i++){
             HeatingCircuit hc = new HeatingCircuit();
             hc.setCurrentTemperature(i);
+
             heatingCircuitList.add(hc);
         }
 
@@ -89,7 +123,6 @@ public class MainView extends AppCompatActivity{
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-
 
     }
 

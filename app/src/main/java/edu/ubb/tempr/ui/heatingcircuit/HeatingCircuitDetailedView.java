@@ -1,4 +1,4 @@
-package edu.ubb.tempr.feature.heatingcircuit;
+package edu.ubb.tempr.ui.heatingcircuit;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -86,7 +86,7 @@ public class HeatingCircuitDetailedView extends AppCompatActivity implements Cir
         mChart.getAxisRight().setEnabled(false);
 
         // add data
-        setData(7, 100);
+        setData(7, 30);
 
         mChart.getLegend().setEnabled(false);
 
@@ -103,7 +103,7 @@ public class HeatingCircuitDetailedView extends AppCompatActivity implements Cir
 //        LineDataSet lineDataSet = new LineDataSet(entries, "Label");
 //        mChart.setData(new LineData(lineDataSet));
         mChart.invalidate();
-
+        getSupportActionBar().setTitle("Room");
     }
 
 

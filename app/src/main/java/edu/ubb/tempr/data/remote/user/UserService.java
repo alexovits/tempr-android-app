@@ -11,6 +11,9 @@ import retrofit2.http.POST;
  */
 
 public interface UserService {
+    @GET("version/")
+    Call<String> getVersion();
+
     @GET("user/login/")
     Call<User> loginUser();
 

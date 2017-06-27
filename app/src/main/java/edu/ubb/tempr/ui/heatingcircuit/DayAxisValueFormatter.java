@@ -1,4 +1,4 @@
-package edu.ubb.tempr.feature.heatingcircuit;
+package edu.ubb.tempr.ui.heatingcircuit;
 
 import com.github.mikephil.charting.charts.BarLineChartBase;
 import com.github.mikephil.charting.components.AxisBase;

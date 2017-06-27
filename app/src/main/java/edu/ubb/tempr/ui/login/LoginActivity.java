@@ -1,28 +1,32 @@
-package edu.ubb.tempr.feature.login;
+package edu.ubb.tempr.ui.login;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import java.util.List;
+import javax.inject.Inject;
 
 import edu.ubb.tempr.R;
-import edu.ubb.tempr.feature.MainView;
+import edu.ubb.tempr.component.TemprApplication;
+import edu.ubb.tempr.ui.MainActivity;
+import edu.ubb.tempr.ui.base.view.BaseActivity;
+import edu.ubb.tempr.util.SessionHelper;
 
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends AppCompatActivity{
+public class LoginActivity extends BaseActivity<LoginViewModel> implements LoginActivityInteraction{
 
     /**
      * Id to identity READ_CONTACTS permission request.
@@ -43,11 +47,14 @@ public class LoginActivity extends AppCompatActivity{
     private View mProgressView;
     private View mLoginFormView;
 
+    @Inject
+    SessionHelper sessionHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        // Set up the login form.
+
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
 
         mPasswordView = (EditText) findViewById(R.id.password);
@@ -72,7 +79,14 @@ public class LoginActivity extends AppCompatActivity{
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
-        getSupportActionBar().hide();
+        getSupportActionBar().hide(); // Hiding the actionbar on login page, it has no use
+
+        setAndBindContentView(R.layout.activity_login, new LoginViewModel(this));
+
+        // TEST: Shared Preference usage
+        TemprApplication.getAppComponent().inject(this);
+        sessionHelper.storeAuthHeader("Zsolt");
+        Log.i("Login", "The stores Authentication-Header: " + sessionHelper.getAuthHeader());
     }
 
     /**
@@ -118,29 +132,22 @@ public class LoginActivity extends AppCompatActivity{
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             // Logein
-            Intent intent = new Intent(this, MainView.class);
+            Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }
     }
 
     private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
         return email.contains("@");
     }
 
     private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
         return password.length() > 4;
     }
 
-    private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
-        //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
-        ArrayAdapter<String> adapter =
-                new ArrayAdapter<>(LoginActivity.this,
-                        android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
-
-        mEmailView.setAdapter(adapter);
+    @Override
+    public void showErrorMessage(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
-
 }
 
