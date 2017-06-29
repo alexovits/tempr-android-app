@@ -46,17 +46,17 @@ public class LoginViewModel extends BaseViewModel<LoginActivity> {
     public void loginTapHandler(View v) {
         sessionHelper.storeCredentials(username,password);
         Log.i(TAG, "The stored Authentication-Header: " + sessionHelper.getAuthHeader());
-        getVersion();
+        authenticateUser();
     }
 
-    private void getVersion(){
-        Call<String> call = userService.getVersion();
-        call.enqueue(new Callback<String>() {
+    private void authenticateUser(){
+        Call<User> call = userService.loginUser();
+        call.enqueue(new Callback<User>() {
 
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
+            public void onResponse(Call<User> call, Response<User> response) {
                 int statusCode = response.code();
-                String user = response.body();
+                User user = response.body();
                 Log.i(TAG, "The response is: " + statusCode + " | And the message is: " + user);
                 if(statusCode == 200) {
                     loginActivityInteraction.showErrorMessage("Yay! Logged in");
@@ -66,7 +66,7 @@ public class LoginViewModel extends BaseViewModel<LoginActivity> {
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(Call<User> call, Throwable t) {
                 Log.i(TAG, "Something went wrong during the /verison/ call: " + t.toString());
                 loginActivityInteraction.showErrorMessage("Network problems! Check your connection!");
             }

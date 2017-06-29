@@ -14,7 +14,7 @@ public interface UserService {
     @GET("version/")
     Call<String> getVersion();
 
-    @GET("user/login/")
+    @POST("user/login/")
     Call<User> loginUser();
 
     @POST("user/register/")
