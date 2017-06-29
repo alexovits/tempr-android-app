@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity{
         setupRecyclerView();
 
         //Dagger test
-        ((TemprApplication) getApplication()).getAppComponent().inject(this);
+        TemprApplication.getAppComponent().inject(this);
         UserService userService = retrofit.create(UserService.class);
         Call<String> call = userService.getVersion();
         call.enqueue(new Callback<String>() {

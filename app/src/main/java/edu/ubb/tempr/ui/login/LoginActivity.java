@@ -19,9 +19,14 @@ import javax.inject.Inject;
 
 import edu.ubb.tempr.R;
 import edu.ubb.tempr.component.TemprApplication;
+import edu.ubb.tempr.data.remote.user.UserService;
 import edu.ubb.tempr.ui.MainActivity;
 import edu.ubb.tempr.ui.base.view.BaseActivity;
 import edu.ubb.tempr.util.SessionHelper;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 /**
  * A login screen that offers login via email/password.
@@ -49,6 +54,9 @@ public class LoginActivity extends BaseActivity<LoginViewModel> implements Login
 
     @Inject
     SessionHelper sessionHelper;
+
+    @Inject
+    Retrofit retrofit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,8 +93,26 @@ public class LoginActivity extends BaseActivity<LoginViewModel> implements Login
 
         // TEST: Shared Preference usage
         TemprApplication.getAppComponent().inject(this);
-        sessionHelper.storeAuthHeader("user","password");
+        sessionHelper.storeCredentials("admin","admin");
         Log.i("Login", "The stores Authentication-Header: " + sessionHelper.getAuthHeader());
+        // TEST: Retrofit
+        UserService userService = retrofit.create(UserService.class);
+        Call<String> call = userService.getVersion();
+        Log.i("Logi ","Na hello na");
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                int statusCode = response.code();
+                String user = response.body();
+                Log.i("LOGIN","The response is: " + statusCode + " | And the message is: " + user);
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                // Log error here since request failed
+                Log.i("LOGIN","FAIL pal a terminator " + t.toString());
+            }
+        });
     }
 
     /**

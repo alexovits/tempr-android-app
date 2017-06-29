@@ -19,19 +19,20 @@ public class SessionHelper {
         prefEditor = userSession.edit();
     }
 
-    public void storeAuthHeader(String username, String password) {
+    public void storeCredentials(String username, String password) {
         String encodedConcatString = Base64.encodeToString((username + ":" + password).getBytes(), 0);
-        Log.i(TAG, "The encoded output of "+username+":"+password+" -> "+encodedConcatString);
-        storeAuthHeader(encodedConcatString);
-    }
-
-    private void storeAuthHeader(String headerValue) {
-        Log.i("SessionHelper","Storing session data for user");
-        prefEditor.putString("Authentication-Header", headerValue);
-        prefEditor.commit();
+        setAuthHeader(encodedConcatString.trim()); // Must get rid of new line characters
     }
 
     public String getAuthHeader() {
         return userSession.getString("Authentication-Header", ""); // Default value is empty string
     }
+
+    private void setAuthHeader(String headerValue) {
+        Log.i("SessionHelper","Storing session data for user");
+        prefEditor.putString("Authentication-Header", headerValue);
+        prefEditor.commit();
+    }
+
+
 }

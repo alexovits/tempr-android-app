@@ -46,8 +46,8 @@ public class NetworkModule {
 
     @AppScope
     @Provides
-    BasicAuthInterceptor provideBasicAuthInterceptor() {
-        return new BasicAuthInterceptor();
+    BasicAuthInterceptor provideBasicAuthInterceptor(SessionHelper sessionHelper) {
+        return new BasicAuthInterceptor(sessionHelper);
     }
 
     @AppScope
