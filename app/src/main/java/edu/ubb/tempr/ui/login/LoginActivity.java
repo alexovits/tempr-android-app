@@ -1,10 +1,8 @@
 package edu.ubb.tempr.ui.login;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,14 +16,9 @@ import android.widget.Toast;
 import javax.inject.Inject;
 
 import edu.ubb.tempr.R;
-import edu.ubb.tempr.component.TemprApplication;
-import edu.ubb.tempr.data.remote.user.UserService;
 import edu.ubb.tempr.ui.MainActivity;
 import edu.ubb.tempr.ui.base.view.BaseActivity;
 import edu.ubb.tempr.util.SessionHelper;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 
 /**
@@ -90,29 +83,6 @@ public class LoginActivity extends BaseActivity<LoginViewModel> implements Login
         getSupportActionBar().hide(); // Hiding the actionbar on login page, it has no use
 
         setAndBindContentView(R.layout.activity_login, new LoginViewModel(this));
-
-        // TEST: Shared Preference usage
-        TemprApplication.getAppComponent().inject(this);
-        sessionHelper.storeCredentials("admin","admin");
-        Log.i("Login", "The stores Authentication-Header: " + sessionHelper.getAuthHeader());
-        // TEST: Retrofit
-        UserService userService = retrofit.create(UserService.class);
-        Call<String> call = userService.getVersion();
-        Log.i("Logi ","Na hello na");
-        call.enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                int statusCode = response.code();
-                String user = response.body();
-                Log.i("LOGIN","The response is: " + statusCode + " | And the message is: " + user);
-            }
-
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                // Log error here since request failed
-                Log.i("LOGIN","FAIL pal a terminator " + t.toString());
-            }
-        });
     }
 
     /**
