@@ -85,7 +85,7 @@ public class LoginActivity extends BaseActivity<LoginViewModel> implements Login
 
         // TEST: Shared Preference usage
         TemprApplication.getAppComponent().inject(this);
-        sessionHelper.storeAuthHeader("Zsolt");
+        sessionHelper.storeAuthHeader("user","password");
         Log.i("Login", "The stores Authentication-Header: " + sessionHelper.getAuthHeader());
     }
 
