@@ -18,6 +18,7 @@ import javax.inject.Inject;
 import edu.ubb.tempr.R;
 import edu.ubb.tempr.ui.MainActivity;
 import edu.ubb.tempr.ui.base.view.BaseActivity;
+import edu.ubb.tempr.util.NavigationIntentHelper;
 import edu.ubb.tempr.util.SessionHelper;
 import retrofit2.Retrofit;
 
@@ -144,6 +145,11 @@ public class LoginActivity extends BaseActivity<LoginViewModel> implements Login
     @Override
     public void showErrorMessage(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void navigateToMainView() {
+        NavigationIntentHelper.startMainView(this);
     }
 }
 

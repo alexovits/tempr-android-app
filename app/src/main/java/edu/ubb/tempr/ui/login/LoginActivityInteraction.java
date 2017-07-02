@@ -6,4 +6,5 @@ package edu.ubb.tempr.ui.login;
 
 public interface LoginActivityInteraction {
     void showErrorMessage(String msg);
+    void navigateToMainView();
 }
