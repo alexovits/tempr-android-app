@@ -8,11 +8,9 @@ import javax.inject.Inject;
 
 import edu.ubb.tempr.R;
 import edu.ubb.tempr.component.TemprApplication;
-import edu.ubb.tempr.component.injection.AppComponent;
 import edu.ubb.tempr.ui.base.view.BaseActivity;
 import edu.ubb.tempr.util.NavigationIntentHelper;
 import edu.ubb.tempr.util.SessionHelper;
-import retrofit2.Retrofit;
 
 /**
  * A login screen that offers login via email/password.

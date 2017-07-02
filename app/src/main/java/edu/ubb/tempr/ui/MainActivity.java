@@ -3,6 +3,7 @@ package edu.ubb.tempr.ui;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,6 +27,8 @@ import edu.ubb.tempr.data.model.User;
 import edu.ubb.tempr.data.remote.user.UserService;
 import edu.ubb.tempr.ui.dashboard.DashboardFragment;
 import edu.ubb.tempr.ui.dashboard.HeatingCircuitAdapter;
+import edu.ubb.tempr.util.NavigationIntentHelper;
+import edu.ubb.tempr.util.SessionHelper;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,6 +45,9 @@ public class MainActivity extends AppCompatActivity{
 
     @Inject
     Retrofit retrofit;
+
+    @Inject
+    SessionHelper sessionHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,28 +70,19 @@ public class MainActivity extends AppCompatActivity{
         nvDrawer = (NavigationView) findViewById(R.id.nvView);
         // Setup drawer view
         setupDrawerContent(nvDrawer);
+
+        switchFragment(new DashboardFragment(), "Dashboard");
+
         // Test
-        setupRecyclerView();
+        //setupRecyclerView();
 
-        //Dagger test
         TemprApplication.getAppComponent().inject(this);
-        UserService userService = retrofit.create(UserService.class);
-        Call<String> call = userService.getVersion();
-        call.enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                int statusCode = response.code();
-                String user = response.body();
-                Log.i("MAIN","The response is: " + statusCode + " | And the message is: " + user);
-            }
+        // getSupportActionBar().setTitle("Dashboard");
+    }
 
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                // Log error here since request failed
-                Log.i("MAIN","FAIL pal a terminator");
-            }
-        });
-        getSupportActionBar().setTitle("Dashboard");
+    public void switchFragment(Fragment fragmentView, String viewTitle){
+        getSupportFragmentManager().beginTransaction().replace(R.id.flContent, fragmentView).commit();
+        setTitle(viewTitle);
     }
 
     private void setupRecyclerView(){
@@ -102,35 +99,10 @@ public class MainActivity extends AppCompatActivity{
         recyclerView.setAdapter(heatingCircuitAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-//
-//        recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener(){
-//
-//            @Override
-//            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-//                return false;
-//            }
-//
-//            @Override
-//            public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-//                rv.
-//            }
-//
-//            @Override
-//            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-//
-//            }
-//        });
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-    }
-
-    private void changeCircleShapeColor(){
-        //Chaning the color of a predefined shape on a textView
-        //TextView textView = (TextView) findViewById(R.id.fasz);
-        //Drawable background = textView.getBackground();
-        //((GradientDrawable) background).setColor(Color.BLUE);
     }
 
     @Override
@@ -180,10 +152,12 @@ public class MainActivity extends AppCompatActivity{
                 });
     }
 
+    @Override
+    public void onBackPressed() {
+        // Right now do nothing since the last view chronologically is the login view
+    }
+
     public void selectDrawerItem(MenuItem menuItem) {
-        // Create a new fragment and specify the fragment to show based on nav item clicked
-        Fragment fragment = null;
-        Class fragmentClass;
         switch(menuItem.getItemId()) {
             case R.id.nav_first_fragment:
                 //fragmentClass = FirstFragment.class;
@@ -196,8 +170,9 @@ public class MainActivity extends AppCompatActivity{
             case R.id.nav_third_fragment:
                 Log.i("Main","Hármas");
                 break;
-            default:
-                Log.i("Main","Négyes");
+            case R.id.nav_fourth_fragment:
+                sessionHelper.clearSession();
+                NavigationIntentHelper.startLoginView(this);
         }
 
 //        try {
