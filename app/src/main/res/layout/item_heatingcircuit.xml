@@ -14,7 +14,7 @@
     >
 
     <TextView
-        android:id="@+id/contact_name"
+        android:id="@+id/current_temp"
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:gravity="center"
@@ -27,7 +27,7 @@
         />
 
     <TextView
-        android:id="@+id/message_button"
+        android:id="@+id/hc_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingLeft="16dp"

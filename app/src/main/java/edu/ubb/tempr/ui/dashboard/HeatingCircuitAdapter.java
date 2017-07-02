@@ -53,9 +53,9 @@ public class HeatingCircuitAdapter extends RecyclerView.Adapter<HeatingCircuitAd
         HeatingCircuit heatingCircuit = heatingCircuitList.get(position);
 
         // Set item views based on your views and data model
-        TextView textView = viewHolder.nameTextView;
-        textView.setText(Integer.toString(heatingCircuit.getCurrentTemperature()));
-        textView.setWidth(0);
+        viewHolder.nameTextView.setText(heatingCircuit.getName());
+        viewHolder.currentTemp.setText(Integer.toString(heatingCircuit.getCurrentTemperature()));
+        viewHolder.nameTextView.setWidth(0);
         //Button button = viewHolder.messageButton;
         //button.setText("Message");
     }
@@ -67,26 +67,27 @@ public class HeatingCircuitAdapter extends RecyclerView.Adapter<HeatingCircuitAd
 
     // Provide a direct reference to each of the views within a data item
     // Used to cache the views within the item layout for fast access
-    public class ViewHolder extends RecyclerView.ViewHolder{ //implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
-        public TextView nameTextView;
+        public TextView nameTextView, currentTemp;
 
         public ViewHolder(View itemView) {
             // Stores the itemView in a public final member variable that can be used
             // to access the context from any ViewHolder instance.
             super(itemView);
-            nameTextView = (TextView) itemView.findViewById(R.id.contact_name);
-            //itemView.setOnClickListener(this);
+            nameTextView = (TextView) itemView.findViewById(R.id.hc_name);
+            currentTemp = (TextView) itemView.findViewById(R.id.current_temp);
+            itemView.setOnClickListener(this);
         }
 
-        /*@Override
+        @Override
         public void onClick(View v) {
             int position = getAdapterPosition();
-            Intent intent = new Intent(getContext(), HeatingCircuitDetailedView.class);
-            getContext().startActivity(intent);
-            Log.i("Adapter", "Na akkor: " + nameTextView.getText());
-        }*/
+            Log.i("ViewHolder","Show the "+heatingCircuitList.get(position).getId());
+            //Intent intent = new Intent(getContext(), HeatingCircuitDetailedView.class);
+            //getContext().startActivity(intent);
+        }
     }
 
 }

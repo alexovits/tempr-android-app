@@ -3,7 +3,9 @@ package edu.ubb.tempr.util;
 import android.content.Context;
 import android.content.Intent;
 
+import edu.ubb.tempr.data.model.HeatingCircuit;
 import edu.ubb.tempr.ui.MainActivity;
+import edu.ubb.tempr.ui.heatingcircuit.HeatingCircuitDetailedView;
 import edu.ubb.tempr.ui.login.LoginActivity;
 
 /**
@@ -20,5 +22,10 @@ public class NavigationIntentHelper {
     public static void startLoginView(Context context){
         Intent intent =  new Intent(context, LoginActivity.class);
         context.startActivity(intent);
+    }
+
+    public static void startDetailedView(Context context, int heatingCircuitId){
+        Intent intent = new Intent(context, HeatingCircuitDetailedView.class);
+
     }
 }

@@ -66,4 +66,9 @@ public class HeatingCircuit {
     public void setName(String name) {
         this.name = name;
     }
+
+    @Override
+    public String toString() {
+        return "HeatingCircuit={token="+name+" currentTemp="+currentTemperature+" desiredTemp="+desiredTemperature+"}";
+    }
 }

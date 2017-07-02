@@ -28,10 +28,20 @@ public class SessionHelper {
         return userSession.getString("Authentication-Header", ""); // Default value is empty string
     }
 
+    public String getToken(){
+        return userSession.getString("Token","");
+    }
+
+    public void storeToken(String token){
+        prefEditor.putString("Token", token);
+        prefEditor.commit();
+    }
+
     public void clearSession() {
         if(sessionExists()){
             Log.i(TAG, "Removing credentials from session");
             prefEditor.remove("Authentication-Header");
+            if(userSession.contains("Token")) prefEditor.remove("Token");
             prefEditor.commit();
         }
     }

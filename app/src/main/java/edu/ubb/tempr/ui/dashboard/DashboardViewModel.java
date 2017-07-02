@@ -17,6 +17,7 @@ import edu.ubb.tempr.component.TemprApplication;
 import edu.ubb.tempr.data.model.HeatingCircuit;
 import edu.ubb.tempr.data.model.User;
 import edu.ubb.tempr.data.remote.user.HeatingCircuitService;
+import edu.ubb.tempr.util.SessionHelper;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -36,6 +37,8 @@ public class DashboardViewModel{
 
     @Inject
     protected Retrofit retrofit;
+    @Inject
+    protected SessionHelper sessionHelper;
 
     public DashboardViewModel(View view, Context context){
         this.view = view;
@@ -46,16 +49,19 @@ public class DashboardViewModel{
 
     public void refreshRecyclerView(){
 
-        //TEST
-        Call<List<HeatingCircuit>> call = heatingCircuitService.getHeatingCircuitList("admin/cf0b6");
+        Call<List<HeatingCircuit>> call = heatingCircuitService.getHeatingCircuitList(sessionHelper.getToken());
         call.enqueue(new Callback<List<HeatingCircuit>>() {
 
             @Override
             public void onResponse(Call<List<HeatingCircuit>> call, Response<List<HeatingCircuit>> response) {
                 int statusCode = response.code();
-                List<HeatingCircuit> user = response.body();
-                Log.i(TAG, "The response is: " + statusCode + " | And the message is: " + user);
-
+                List<HeatingCircuit> heatingCircuitList = response.body();
+                Log.i(TAG, "The response is: " + statusCode + " | And the message is: " + heatingCircuitList);
+                RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.rvContacts);
+                HeatingCircuitAdapter heatingCircuitAdapter = new HeatingCircuitAdapter(context, heatingCircuitList);
+                recyclerView.setAdapter(heatingCircuitAdapter);
+                recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                recyclerView.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
             }
 
             @Override
@@ -64,21 +70,7 @@ public class DashboardViewModel{
             }
 
         });
-        //TEST
 
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.rvContacts);
-        List heatingCircuitList = new ArrayList<>();
-        for(int i=19; i<23; i++){
-            HeatingCircuit hc = new HeatingCircuit();
-            hc.setCurrentTemperature(i);
-
-            heatingCircuitList.add(hc);
-        }
-
-        HeatingCircuitAdapter heatingCircuitAdapter = new HeatingCircuitAdapter(context, heatingCircuitList);
-        recyclerView.setAdapter(heatingCircuitAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        recyclerView.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
     }
 
 

@@ -8,6 +8,7 @@ import javax.annotation.Generated;
 import javax.inject.Inject;
 
 import edu.ubb.tempr.component.TemprApplication;
+import edu.ubb.tempr.data.model.Thermostat;
 import edu.ubb.tempr.data.model.User;
 import edu.ubb.tempr.data.remote.user.UserService;
 import edu.ubb.tempr.ui.base.viewmodel.BaseViewModel;
@@ -57,9 +58,9 @@ public class LoginViewModel extends BaseViewModel<LoginActivity> {
             public void onResponse(Call<User> call, Response<User> response) {
                 int statusCode = response.code();
                 User user = response.body();
-                Log.i(TAG, "The response is: " + statusCode + " | And the message is: " + user);
+                Log.i(TAG, "The response on /login/ is: " + statusCode + " | And the message is: " + user);
                 if(statusCode == 200) {
-                    loginActivityInteraction.navigateToMainView();
+                    fetchAndStoreToken(user.getId());
                 }else {
                     loginActivityInteraction.showErrorMessage("Nah.. try again!");
                     sessionHelper.clearSession();
@@ -70,6 +71,34 @@ public class LoginViewModel extends BaseViewModel<LoginActivity> {
             public void onFailure(Call<User> call, Throwable t) {
                 Log.i(TAG, "Something went wrong during the /version/ call: " + t.toString());
                 loginActivityInteraction.showErrorMessage("Network problems! Check your connection!");
+                sessionHelper.clearSession();
+            }
+
+        });
+    }
+
+    private void fetchAndStoreToken(final Long userId){
+        Call<Thermostat> call = userService.fetchThermostat(userId);
+        call.enqueue(new Callback<Thermostat>() {
+
+            @Override
+            public void onResponse(Call<Thermostat> call, Response<Thermostat> response) {
+                int statusCode = response.code();
+                Thermostat thermostat = response.body();
+                Log.i(TAG, "The response on /thermostat/ is: " + statusCode + " | And the message is: " + thermostat);
+                if(statusCode == 200) {
+                    Log.i(TAG,"Successful login with userId="+userId+" and token="+thermostat.getToken());
+                    sessionHelper.storeToken(thermostat.getToken());
+                    loginActivityInteraction.navigateToMainView();
+                }else {
+                    loginActivityInteraction.showErrorMessage("Nah.. try again!");
+                    sessionHelper.clearSession();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Thermostat> call, Throwable t) {
+                Log.i(TAG, "Something went wrong during the /version/ call: " + t.toString());
                 sessionHelper.clearSession();
             }
 
