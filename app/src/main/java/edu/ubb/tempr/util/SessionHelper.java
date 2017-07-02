@@ -28,6 +28,18 @@ public class SessionHelper {
         return userSession.getString("Authentication-Header", ""); // Default value is empty string
     }
 
+    public void clearSession() {
+        if(sessionExists()){
+            Log.i(TAG, "Removing credentials from session");
+            prefEditor.remove("Authentication-Header");
+            prefEditor.commit();
+        }
+    }
+
+    public boolean sessionExists() {
+        return userSession.contains("Authentication-Header");
+    }
+
     private void setAuthHeader(String headerValue) {
         Log.i("SessionHelper","Storing session data for user");
         prefEditor.putString("Authentication-Header", headerValue);

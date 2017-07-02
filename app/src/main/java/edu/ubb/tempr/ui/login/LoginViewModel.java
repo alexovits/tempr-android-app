@@ -59,10 +59,10 @@ public class LoginViewModel extends BaseViewModel<LoginActivity> {
                 User user = response.body();
                 Log.i(TAG, "The response is: " + statusCode + " | And the message is: " + user);
                 if(statusCode == 200) {
-//                    loginActivityInteraction.showErrorMessage("Yay! Logged in");
                     loginActivityInteraction.navigateToMainView();
                 }else {
                     loginActivityInteraction.showErrorMessage("Nah.. try again!");
+                    sessionHelper.clearSession();
                 }
             }
 
@@ -70,6 +70,7 @@ public class LoginViewModel extends BaseViewModel<LoginActivity> {
             public void onFailure(Call<User> call, Throwable t) {
                 Log.i(TAG, "Something went wrong during the /version/ call: " + t.toString());
                 loginActivityInteraction.showErrorMessage("Network problems! Check your connection!");
+                sessionHelper.clearSession();
             }
 
         });
