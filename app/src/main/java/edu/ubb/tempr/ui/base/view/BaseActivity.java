@@ -16,7 +16,6 @@ import edu.ubb.tempr.ui.base.viewmodel.MvvmViewModel;
 public abstract class BaseActivity<V extends MvvmViewModel> extends AppCompatActivity implements MvvmView{
 
     protected ViewDataBinding binding;
-//    @Inject protected V viewModel;
     protected V viewModel;
 
     protected final void setAndBindContentView(@LayoutRes int layoutResId, V viewModel) {

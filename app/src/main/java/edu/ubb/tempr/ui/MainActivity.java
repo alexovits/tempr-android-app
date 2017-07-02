@@ -22,11 +22,15 @@ import javax.inject.Inject;
 
 import edu.ubb.tempr.R;
 import edu.ubb.tempr.component.TemprApplication;
+import edu.ubb.tempr.component.injection.AppComponent;
 import edu.ubb.tempr.data.model.HeatingCircuit;
 import edu.ubb.tempr.data.model.User;
 import edu.ubb.tempr.data.remote.user.UserService;
+import edu.ubb.tempr.ui.base.view.BaseActivity;
 import edu.ubb.tempr.ui.dashboard.DashboardFragment;
+import edu.ubb.tempr.ui.dashboard.DashboardViewModel;
 import edu.ubb.tempr.ui.dashboard.HeatingCircuitAdapter;
+import edu.ubb.tempr.ui.login.LoginViewModel;
 import edu.ubb.tempr.util.NavigationIntentHelper;
 import edu.ubb.tempr.util.SessionHelper;
 import okhttp3.OkHttpClient;
@@ -41,10 +45,6 @@ public class MainActivity extends AppCompatActivity{
     private Toolbar toolbar;
     private NavigationView nvDrawer;
     private ActionBarDrawerToggle drawerToggle;
-    private List<HeatingCircuit> heatingCircuitList;
-
-    @Inject
-    Retrofit retrofit;
 
     @Inject
     SessionHelper sessionHelper;
@@ -58,51 +58,24 @@ public class MainActivity extends AppCompatActivity{
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // Find our drawer view
+        // Find the drawer view
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-
         drawerToggle = setupDrawerToggle();
-
-        // Tie DrawerLayout events to the ActionBarToggle
         mDrawer.addDrawerListener(drawerToggle);
-
-        // Find our drawer view
+        // Find Navigation drawer
         nvDrawer = (NavigationView) findViewById(R.id.nvView);
         // Setup drawer view
         setupDrawerContent(nvDrawer);
+        TemprApplication.getAppComponent().inject(this);
 
+        // Switch to default dashboard fragment
         switchFragment(new DashboardFragment(), "Dashboard");
 
-        // Test
-        //setupRecyclerView();
-
-        TemprApplication.getAppComponent().inject(this);
-        // getSupportActionBar().setTitle("Dashboard");
     }
 
     public void switchFragment(Fragment fragmentView, String viewTitle){
         getSupportFragmentManager().beginTransaction().replace(R.id.flContent, fragmentView).commit();
         setTitle(viewTitle);
-    }
-
-    private void setupRecyclerView(){
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rvContacts);
-        heatingCircuitList = new ArrayList<>();
-        for(int i=19; i<23; i++){
-            HeatingCircuit hc = new HeatingCircuit();
-            hc.setCurrentTemperature(i);
-
-            heatingCircuitList.add(hc);
-        }
-
-        HeatingCircuitAdapter heatingCircuitAdapter = new HeatingCircuitAdapter(this, heatingCircuitList);
-        recyclerView.setAdapter(heatingCircuitAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-
     }
 
     @Override
@@ -127,13 +100,6 @@ public class MainActivity extends AppCompatActivity{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // The action bar home/up action should open or close the drawer.
-        /*switch (item.getItemId()) {
-            case android.R.id.home:
-                mDrawer.openDrawer(GravityCompat.START);
-                return true;
-        }*/
-
         if (drawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
@@ -162,8 +128,7 @@ public class MainActivity extends AppCompatActivity{
             case R.id.nav_first_fragment:
                 //fragmentClass = FirstFragment.class;
                 Log.i("Main","Egyes");
-                DashboardFragment dashboardFragment = new DashboardFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.flContent, dashboardFragment).commit();
+                //setTitle(menuItem.getTitle());
             case R.id.nav_second_fragment:
                 Log.i("Main","Kettes");
                 break;
@@ -174,22 +139,6 @@ public class MainActivity extends AppCompatActivity{
                 sessionHelper.clearSession();
                 NavigationIntentHelper.startLoginView(this);
         }
-
-//        try {
-//            fragment = (Fragment) fragmentClass.newInstance();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-
-        // Insert the fragment by replacing any existing fragment
-        /*FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
-
-        // Highlight the selected item has been done by NavigationView
-        menuItem.setChecked(true);*/
-        // Set action bar title
-        setTitle(menuItem.getTitle());
-        // Close the navigation drawer
         mDrawer.closeDrawers();
     }
 }

@@ -67,7 +67,7 @@ public class HeatingCircuitAdapter extends RecyclerView.Adapter<HeatingCircuitAd
 
     // Provide a direct reference to each of the views within a data item
     // Used to cache the views within the item layout for fast access
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder{ //implements View.OnClickListener {
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
         public TextView nameTextView;
@@ -77,16 +77,16 @@ public class HeatingCircuitAdapter extends RecyclerView.Adapter<HeatingCircuitAd
             // to access the context from any ViewHolder instance.
             super(itemView);
             nameTextView = (TextView) itemView.findViewById(R.id.contact_name);
-            itemView.setOnClickListener(this);
+            //itemView.setOnClickListener(this);
         }
 
-        @Override
+        /*@Override
         public void onClick(View v) {
             int position = getAdapterPosition();
             Intent intent = new Intent(getContext(), HeatingCircuitDetailedView.class);
             getContext().startActivity(intent);
             Log.i("Adapter", "Na akkor: " + nameTextView.getText());
-        }
+        }*/
     }
 
 }

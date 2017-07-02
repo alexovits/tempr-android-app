@@ -41,7 +41,7 @@ public class SessionHelper {
     }
 
     private void setAuthHeader(String headerValue) {
-        Log.i("SessionHelper","Storing session data for user");
+        Log.i(TAG,"Storing session data for user");
         prefEditor.putString("Authentication-Header", headerValue);
         prefEditor.commit();
     }
