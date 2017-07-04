@@ -7,6 +7,7 @@ import android.util.Log;
 import edu.ubb.tempr.ui.MainActivity;
 import edu.ubb.tempr.ui.heatingcircuit.DetailedView;
 import edu.ubb.tempr.ui.login.LoginActivity;
+import edu.ubb.tempr.ui.signup.SignUpActivity;
 
 /**
  * Created by zsoltszabo on 7/2/17.
@@ -21,6 +22,11 @@ public class NavigationIntentHelper {
 
     public static void startLoginView(Context context){
         Intent intent =  new Intent(context, LoginActivity.class);
+        context.startActivity(intent);
+    }
+
+    public static void startSignupView(Context context){
+        Intent intent =  new Intent(context, SignUpActivity.class);
         context.startActivity(intent);
     }
 

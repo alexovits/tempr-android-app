@@ -1,6 +1,7 @@
 package edu.ubb.tempr.ui.login;
 
 import android.os.Bundle;
+import android.support.transition.Visibility;
 import android.view.View;
 import android.widget.Toast;
 
@@ -28,7 +29,7 @@ public class LoginActivity extends BaseActivity<LoginViewModel> implements Login
         super.onCreate(savedInstanceState);
         TemprApplication.getAppComponent().inject(this);
         // If there's already a user logged in do not greet with login view
-        if(sessionHelper.sessionExists()) {
+        if (sessionHelper.sessionExists()) {
             navigateToMainView();
 //            sessionHelper.clearSession(); // For debugging
         }
@@ -39,8 +40,9 @@ public class LoginActivity extends BaseActivity<LoginViewModel> implements Login
         getSupportActionBar().hide(); // Hiding the actionbar on login page, it has no use
 
         setAndBindContentView(R.layout.activity_login, new LoginViewModel(this));
-
     }
+
+
 
     @Override
     public void showErrorMessage(String msg) {
@@ -50,6 +52,20 @@ public class LoginActivity extends BaseActivity<LoginViewModel> implements Login
     @Override
     public void navigateToMainView() {
         NavigationIntentHelper.startMainView(this);
+    }
+
+    @Override
+    public void navigateToSingUpView() {
+        NavigationIntentHelper.startSignupView(this);
+    }
+
+    @Override
+    public void setProgress(boolean state) {
+        if(state) {
+            mProgressView.setVisibility(View.VISIBLE);
+        }else{
+            mProgressView.setVisibility(View.INVISIBLE);
+        }
     }
 }
 

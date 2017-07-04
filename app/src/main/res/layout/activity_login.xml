@@ -105,15 +105,15 @@
                 android:backgroundTint="@color/primary"
                 android:textSize="17dp"
                 android:textColor="@color/canvas"
-                android:onClick="@{viewModel::loginTapHandler}"/>
+                android:onClick="@{viewModel::signupTapHandler}"/>
             <ProgressBar
                 android:id="@+id/login_progress"
                 style="?android:attr/progressBarStyleLarge"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginTop="20dp"
-                android:visibility="gone"
                 android:layout_gravity="center"
+                android:visibility="gone"
                 />
         </LinearLayout>
 

@@ -49,7 +49,12 @@ public class LoginViewModel extends BaseViewModel<LoginActivity> {
         authenticateUser();
     }
 
+    public void signupTapHandler(View v) {
+        loginActivityInteraction.navigateToSingUpView();
+    }
+
     private void authenticateUser(){
+        loginActivityInteraction.setProgress(true);
         Call<User> call = userService.loginUser();
         call.enqueue(new Callback<User>() {
 
@@ -88,10 +93,12 @@ public class LoginViewModel extends BaseViewModel<LoginActivity> {
                 if(statusCode == 200) {
                     Log.i(TAG,"Successful login with userId="+userId+" and token="+thermostat.getToken());
                     sessionHelper.storeToken(thermostat.getToken());
+                    loginActivityInteraction.setProgress(false);
                     loginActivityInteraction.navigateToMainView();
                 }else {
                     loginActivityInteraction.showErrorMessage("Nah.. try again!");
                     sessionHelper.clearSession();
+                    loginActivityInteraction.setProgress(false);
                 }
             }
 
@@ -99,6 +106,7 @@ public class LoginViewModel extends BaseViewModel<LoginActivity> {
             public void onFailure(Call<Thermostat> call, Throwable t) {
                 Log.i(TAG, "Something went wrong during the /version/ call: " + t.toString());
                 sessionHelper.clearSession();
+                loginActivityInteraction.setProgress(false);
             }
 
         });
