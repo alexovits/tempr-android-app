@@ -27,7 +27,7 @@
         <activity
             android:name=".ui.MainActivity"
             android:label="@string/title_activity_main_view"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.heatingcircuit.DetailedView"
             android:label="@string/title_activity_heating_circuit_detailed_view"
@@ -35,7 +35,8 @@
         <activity
             android:name=".ui.settings.MainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ui.signup.SignUpActivity"></activity>
     </application>
 
 </manifest>
