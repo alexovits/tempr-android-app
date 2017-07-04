@@ -1,6 +1,7 @@
 package edu.ubb.tempr.ui;
 
 import android.content.res.Configuration;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -31,6 +32,7 @@ import edu.ubb.tempr.ui.dashboard.DashboardFragment;
 import edu.ubb.tempr.ui.dashboard.DashboardViewModel;
 import edu.ubb.tempr.ui.dashboard.HeatingCircuitAdapter;
 import edu.ubb.tempr.ui.login.LoginViewModel;
+import edu.ubb.tempr.ui.settings.SettingsFragment;
 import edu.ubb.tempr.util.NavigationIntentHelper;
 import edu.ubb.tempr.util.SessionHelper;
 import okhttp3.OkHttpClient;
@@ -126,18 +128,16 @@ public class MainActivity extends AppCompatActivity{
     public void selectDrawerItem(MenuItem menuItem) {
         switch(menuItem.getItemId()) {
             case R.id.nav_first_fragment:
-                //fragmentClass = FirstFragment.class;
-                Log.i("Main","Egyes");
-                //setTitle(menuItem.getTitle());
-            case R.id.nav_second_fragment:
-                Log.i("Main","Kettes");
+                switchFragment(new DashboardFragment(), "Dashboard");
                 break;
-            case R.id.nav_third_fragment:
-                Log.i("Main","Hármas");
+            case R.id.nav_second_fragment:
+                Log.i("Main", "Settings");
+                switchFragment(new SettingsFragment(), "Dashboard");
                 break;
             case R.id.nav_fourth_fragment:
                 sessionHelper.clearSession();
                 NavigationIntentHelper.startLoginView(this);
+                break;
         }
         mDrawer.closeDrawers();
     }
