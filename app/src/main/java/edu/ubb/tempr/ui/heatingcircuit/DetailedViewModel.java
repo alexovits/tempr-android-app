@@ -1,6 +1,7 @@
 package edu.ubb.tempr.ui.heatingcircuit;
 
 import android.databinding.Bindable;
+import android.databinding.tool.util.L;
 import android.os.Handler;
 import android.util.Log;
 
@@ -27,7 +28,7 @@ import retrofit2.Retrofit;
 public class DetailedViewModel extends BaseViewModel<DetailedView> implements CircularSlider.OnSliderMovedListener {
 
     private static final String TAG = DetailedViewModel.class.getName();
-    private static final int REFRESH_TIME = 10000;
+    private static final int REFRESH_TIME = 3500;
 
     private String desiredValue;
     private String sliderCaption;
@@ -35,6 +36,8 @@ public class DetailedViewModel extends BaseViewModel<DetailedView> implements Ci
     private HeatingCircuitService heatingCircuitService;
     private HeatingCircuit heatingCircuit;
     private boolean aiSwitchValue;
+    private Runnable dataChangeObserver;
+    private Handler dataHandler;
 
     @Inject
     Retrofit retrofit;
@@ -50,10 +53,23 @@ public class DetailedViewModel extends BaseViewModel<DetailedView> implements Ci
         fetchHistoryData();
         aiSwitchValue = heatingCircuit.isAiflag();
         if(!aiSwitchValue){
+            Log.i(TAG,"We desire!!!!");
             sliderCaption = "Desired Temperature";
+            setSlider(heatingCircuit.getDesiredTemperature());
         }else{
             sliderCaption = "Suggested Temperature";
+            Log.i(TAG, "Faszom kivan: "+heatingCircuit.getSuggestedTemperature());
+            setSlider((int)heatingCircuit.getSuggestedTemperature());
         }
+        dataHandler = new Handler();
+        dataChangeObserver = new Runnable() {
+            @Override
+            public void run() {
+                if(!aiSwitchValue) sendDesiredTempToServer();
+                dataHandler.postDelayed(this, REFRESH_TIME);
+            }
+        };
+        startDataObserverHandler();
     }
 
     public void refreshHeatingCircuit() {
@@ -117,6 +133,7 @@ public class DetailedViewModel extends BaseViewModel<DetailedView> implements Ci
     }
 
     public void sendDesiredTempToServer() {
+        Log.i(TAG, "Pushing temperature data to server: "+desiredValue);
         Call<Void> call = heatingCircuitService.postDesiredTemp(heatingCircuit.getId(), Integer.parseInt(desiredValue));
 //        Call<Void> call = heatingCircuitService.postDesiredTemp(heatingCircuit.getId(), 15);
         call.enqueue(new Callback<Void>() {
@@ -135,7 +152,6 @@ public class DetailedViewModel extends BaseViewModel<DetailedView> implements Ci
             public void onFailure(Call<Void> call, Throwable t) {
                 Log.i(TAG, "Something went wrong during the /thermostat/heatingcircuit/desiredTemp call: " + t.toString());
             }
-
         });
     }
 
@@ -152,20 +168,12 @@ public class DetailedViewModel extends BaseViewModel<DetailedView> implements Ci
         notifyChange();
     }
 
+    public void destroyObserver(){
+        dataHandler.removeCallbacks(dataChangeObserver);
+    }
+
     private void startDataObserverHandler() {
-        final Handler dataHandler = new Handler();
-        final String desiredValueTemp = desiredValue;
-        boolean aiSwitchValueTemp = aiSwitchValue;
-        dataHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (!desiredValueTemp.equals(desiredValue)) {
-                    // Refresh slider
-                }
-                Log.i(TAG, "Na akkor itt is vagyunk: ");
-                dataHandler.postDelayed(this, REFRESH_TIME);
-            }
-        }, REFRESH_TIME);
+        dataHandler.postDelayed(dataChangeObserver, REFRESH_TIME);
     }
 
     private void setAiSwitch(boolean val) {
@@ -208,7 +216,7 @@ public class DetailedViewModel extends BaseViewModel<DetailedView> implements Ci
     @Bindable
     public void setDesiredValue(String desiredValue) {
         this.desiredValue = desiredValue;
-        sendDesiredTempToServer();
+        setSlider(Integer.parseInt(desiredValue));
     }
 
     @Bindable

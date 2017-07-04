@@ -57,7 +57,7 @@ public class DashboardViewModel{
                 Log.i(TAG, "The response is: " + statusCode + " | And the message is: " + heatingCircuitList);
                 RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.rvContacts);
                 HeatingCircuitAdapter heatingCircuitAdapter = new HeatingCircuitAdapter(context, heatingCircuitList);
-                recyclerView.swapAdapter(heatingCircuitAdapter, false);
+                recyclerView.setAdapter(heatingCircuitAdapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
                 recyclerView.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
                 recyclerView.invalidate();

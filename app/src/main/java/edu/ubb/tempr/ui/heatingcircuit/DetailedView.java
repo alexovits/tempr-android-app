@@ -29,13 +29,12 @@ import edu.ubb.tempr.ui.base.view.BaseActivity;
 import me.angrybyte.circularslider.CircularSlider;
 
 
-public class DetailedView extends BaseActivity<DetailedViewModel> implements DetailedViewInteraction, SwipeRefreshLayout.OnRefreshListener {
+public class DetailedView extends BaseActivity<DetailedViewModel> implements DetailedViewInteraction {
 
     private static final String TAG = DetailedView.class.getName();
 
     private CircularSlider desiredSlider;
     private LineChart mChart;
-    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +52,10 @@ public class DetailedView extends BaseActivity<DetailedViewModel> implements Det
         heatingCircuit.setId(extras.getLong("HeatingCircuit-id"));
         heatingCircuit.setName(extras.getString("HeatingCircuit-name"));
 
+        Log.i(TAG, "So desired: "+heatingCircuit.getDesiredTemperature()+" and suggested: "+heatingCircuit.getSuggestedTemperature() + "and Flag is: "+ heatingCircuit.isAiflag());
+
         // Set up ViewModel
-        DetailedViewModel viewModel = new DetailedViewModel(this, heatingCircuit);
+        viewModel = new DetailedViewModel(this, heatingCircuit);
         setAndBindContentView(R.layout.activity_heating_circuit_detailed_view, viewModel);
 
         // Setting up the toolbar
@@ -67,22 +68,13 @@ public class DetailedView extends BaseActivity<DetailedViewModel> implements Det
         desiredSlider = (CircularSlider) findViewById(R.id.circular);
         desiredSlider.setOnSliderMovedListener(viewModel);
         desiredSlider.setThumbColor(R.color.primary_dark);
-        viewModel.setSlider(heatingCircuit.getDesiredTemperature());
+//        viewModel.setSlider(heatingCircuit.getDesiredTemperature());
         initChartWithDefaultParams();
         setSliderEnabled(!heatingCircuit.isAiflag());
 
-        // Config refresh
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
-        swipeRefreshLayout.setOnRefreshListener(this);
 
         // Set title for HC name
         getSupportActionBar().setTitle(extras.getString("HeatingCircuit-name"));
-    }
-
-    @Override
-    public void onRefresh() {
-        Log.i(TAG, "Refresh the states");
-        swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
@@ -101,8 +93,11 @@ public class DetailedView extends BaseActivity<DetailedViewModel> implements Det
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == android.R.id.home)
+        if(item.getItemId() == android.R.id.home) {
+            Log.i(TAG, "Getting destroyed MOTHEFUCKA");
+            viewModel.destroyObserver();
             finish();
+        }
         return super.onOptionsItemSelected(item);
     }
 
