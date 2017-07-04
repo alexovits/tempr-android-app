@@ -3,6 +3,8 @@ package edu.ubb.tempr.component.injection;
 import dagger.Component;
 import edu.ubb.tempr.ui.MainActivity;
 import edu.ubb.tempr.ui.dashboard.DashboardViewModel;
+import edu.ubb.tempr.ui.heatingcircuit.DetailedViewInteraction;
+import edu.ubb.tempr.ui.heatingcircuit.DetailedViewModel;
 import edu.ubb.tempr.ui.login.LoginActivity;
 import edu.ubb.tempr.ui.login.LoginViewModel;
 
@@ -16,4 +18,5 @@ public interface AppComponent {
     void inject(LoginViewModel loginViewModel);
     void inject(MainActivity mainActivity);
     void inject(DashboardViewModel dashboardViewModel);
+    void inject(DetailedViewModel detailedViewModel);
 }

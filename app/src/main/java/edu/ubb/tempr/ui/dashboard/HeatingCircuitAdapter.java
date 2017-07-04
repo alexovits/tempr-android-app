@@ -1,8 +1,6 @@
 package edu.ubb.tempr.ui.dashboard;
 
 import android.content.Context;
-import android.content.Intent;
-import android.support.v7.widget.ActionBarContainer;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,7 +12,7 @@ import java.util.List;
 
 import edu.ubb.tempr.R;
 import edu.ubb.tempr.data.model.HeatingCircuit;
-import edu.ubb.tempr.ui.heatingcircuit.HeatingCircuitDetailedView;
+import edu.ubb.tempr.util.NavigationIntentHelper;
 
 /**
  * Created by zsoltszabo on 6/14/17.
@@ -84,9 +82,9 @@ public class HeatingCircuitAdapter extends RecyclerView.Adapter<HeatingCircuitAd
         @Override
         public void onClick(View v) {
             int position = getAdapterPosition();
-            Log.i("ViewHolder","Show the "+heatingCircuitList.get(position).getId());
-            //Intent intent = new Intent(getContext(), HeatingCircuitDetailedView.class);
-            //getContext().startActivity(intent);
+            HeatingCircuit hc = heatingCircuitList.get(position);
+            Log.i("ViewHolder","Show the hc with the id="+hc.getId());
+            NavigationIntentHelper.startDetailedView(getContext(), hc.getId(), hc.getName(), hc.getDesiredTemperature(), hc.getSuggestedTemperature(), hc.isAiflag());
         }
     }
 

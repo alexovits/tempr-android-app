@@ -30,6 +30,7 @@ public class LoginActivity extends BaseActivity<LoginViewModel> implements Login
         // If there's already a user logged in do not greet with login view
         if(sessionHelper.sessionExists()) {
             navigateToMainView();
+//            sessionHelper.clearSession(); // For debugging
         }
 
         setContentView(R.layout.activity_login);

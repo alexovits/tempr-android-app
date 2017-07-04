@@ -4,7 +4,6 @@ import android.databinding.Bindable;
 import android.util.Log;
 import android.view.View;
 
-import javax.annotation.Generated;
 import javax.inject.Inject;
 
 import edu.ubb.tempr.component.TemprApplication;

@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -15,7 +14,6 @@ import javax.inject.Inject;
 import edu.ubb.tempr.R;
 import edu.ubb.tempr.component.TemprApplication;
 import edu.ubb.tempr.data.model.HeatingCircuit;
-import edu.ubb.tempr.data.model.User;
 import edu.ubb.tempr.data.remote.user.HeatingCircuitService;
 import edu.ubb.tempr.util.SessionHelper;
 import retrofit2.Call;
@@ -59,9 +57,10 @@ public class DashboardViewModel{
                 Log.i(TAG, "The response is: " + statusCode + " | And the message is: " + heatingCircuitList);
                 RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.rvContacts);
                 HeatingCircuitAdapter heatingCircuitAdapter = new HeatingCircuitAdapter(context, heatingCircuitList);
-                recyclerView.setAdapter(heatingCircuitAdapter);
+                recyclerView.swapAdapter(heatingCircuitAdapter, false);
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
                 recyclerView.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
+                recyclerView.invalidate();
             }
 
             @Override

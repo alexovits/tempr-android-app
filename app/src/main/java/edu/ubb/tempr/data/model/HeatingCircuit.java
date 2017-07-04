@@ -10,7 +10,7 @@ public class HeatingCircuit {
     @SerializedName("heatingCircuitId") private long id;
     @SerializedName("currentTemperature") private int currentTemperature;
     @SerializedName("desiredTemperature") private int desiredTemperature;
-    @SerializedName("suggestedTemperature") private int suggestedTemperature;
+    @SerializedName("suggestedTemperature") private double suggestedTemperature;
     @SerializedName("aiflag") private boolean aiflag;
     @SerializedName("heatingCircuitName") private String name;
 
@@ -35,11 +35,11 @@ public class HeatingCircuit {
         this.desiredTemperature = desiredTemperature;
     }
 
-    public int getSuggestedTemperature() {
+    public double getSuggestedTemperature() {
         return suggestedTemperature;
     }
 
-    public void setSuggestedTemperature(int suggestedTemperature) {
+    public void setSuggestedTemperature(double suggestedTemperature) {
         this.suggestedTemperature = suggestedTemperature;
     }
 

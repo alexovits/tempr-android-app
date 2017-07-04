@@ -2,10 +2,10 @@ package edu.ubb.tempr.util;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
-import edu.ubb.tempr.data.model.HeatingCircuit;
 import edu.ubb.tempr.ui.MainActivity;
-import edu.ubb.tempr.ui.heatingcircuit.HeatingCircuitDetailedView;
+import edu.ubb.tempr.ui.heatingcircuit.DetailedView;
 import edu.ubb.tempr.ui.login.LoginActivity;
 
 /**
@@ -24,8 +24,14 @@ public class NavigationIntentHelper {
         context.startActivity(intent);
     }
 
-    public static void startDetailedView(Context context, int heatingCircuitId){
-        Intent intent = new Intent(context, HeatingCircuitDetailedView.class);
-
+    public static void startDetailedView(Context context, long heatingCircuitId, String name, int desiredTemp, double suggestedTemp, boolean aiFlag){
+        Intent intent = new Intent(context, DetailedView.class);
+        Log.i("Navig","Na most: " + desiredTemp);
+        intent.putExtra("HeatingCircuit-id",heatingCircuitId);
+        intent.putExtra("HeatingCircuit-name", name);
+        intent.putExtra("HeatingCircuit-aiflag", aiFlag);
+        intent.putExtra("HeatingCircuit-desiredTemp", desiredTemp);
+        intent.putExtra("HeatingCircuit-suggestedTemp", (int) suggestedTemp);
+        context.startActivity(intent);
     }
 }
