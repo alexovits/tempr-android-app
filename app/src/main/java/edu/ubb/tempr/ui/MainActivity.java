@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity{
                 break;
             case R.id.nav_second_fragment:
                 Log.i("Main", "Settings");
-                switchFragment(new SettingsFragment(), "Dashboard");
+                switchFragment(new SettingsFragment(), "Settings");
                 break;
             case R.id.nav_fourth_fragment:
                 sessionHelper.clearSession();
